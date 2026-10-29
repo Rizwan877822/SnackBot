@@ -314,8 +314,8 @@ Affiliated to Bharathiar University
 **Project Guide:** Dr. V. Santhana Lakshmi, M.Sc., M.Phil., Ph.D.
 Associate Professor, Department of Computer Science with Data Analytics
 
-📧 Connect: [LinkedIn](https://www.linkedin.com/in/mohammad-rizwan-66345b362)
-🐙 GitHub: [github.com/YOUR_USERNAME](https://github.com/Rizwan877822)
+📧 Connect: [https://www.linkedin.com/in/rizwan-t-dataanalyst/](https://www.linkedin.com/in/mohammad-rizwan-66345b362)
+🐙 GitHub: [github.com/Rizwan877822](https://github.com/Rizwan877822)
 
 ---
 
