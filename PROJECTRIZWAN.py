@@ -26,7 +26,7 @@ st.set_page_config(page_title="🍔 SnackBot Pro", page_icon="🍔", layout="wid
 st.set_page_config(page_title="🍔 SnackBot Pro", page_icon="🍔", layout="wide")
 
 # Automatically format Supabase URL for SQLAlchemy + psycopg2
-raw_url = st.secrets["postgresql://postgres.mfmzieiomviomryahbmy:Rizwan%402712006@aws-1-ap-northeast-1.pooler.supabase.com:5432/postgres"]
+raw_url = st.secrets["postgresql://postgres.mfmzieiomviomryahbmy:Rizwan@2712006@aws-1-ap-northeast-1.pooler.supabase.com:5432/postgres"]
 if raw_url.startswith("postgres://"):
     raw_url = raw_url.replace("postgres://", "postgresql+psycopg2://", 1)
 elif raw_url.startswith("postgresql://"):
