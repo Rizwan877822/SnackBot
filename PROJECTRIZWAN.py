@@ -9,15 +9,34 @@ from typing import Dict, List
 
 # ---------------- Configuration ----------------
 st.set_page_config(page_title="🍔 SnackBot Pro", page_icon="🍔", layout="wide")
+# ---------------- Configuration ----------------
+st.set_page_config(page_title="🍔 SnackBot Pro", page_icon="🍔", layout="wide")
 
-DB_URL = "postgresql+psycopg2://postgres:rizwan@localhost:5432/rizwan"
+# Automatically format Supabase URL for SQLAlchemy + psycopg2
+raw_url = st.secrets["DATABASE_URL"]
+if raw_url.startswith("postgres://"):
+    raw_url = raw_url.replace("postgres://", "postgresql+psycopg2://", 1)
+elif raw_url.startswith("postgresql://"):
+    raw_url = raw_url.replace("postgresql://", "postgresql+psycopg2://", 1)
+
+# ---------------- Configuration ----------------
+st.set_page_config(page_title="🍔 SnackBot Pro", page_icon="🍔", layout="wide")
+
+# Automatically format Supabase URL for SQLAlchemy + psycopg2
+raw_url = st.secrets["DATABASE_URL"]
+if raw_url.startswith("postgres://"):
+    raw_url = raw_url.replace("postgres://", "postgresql+psycopg2://", 1)
+elif raw_url.startswith("postgresql://"):
+    raw_url = raw_url.replace("postgresql://", "postgresql+psycopg2://", 1)
+
+DB_URL = raw_url
 EMBED_MODEL = "all-MiniLM-L6-v2"
 
 
 # ---------------- Data Engine ----------------
 @st.cache_data(ttl=300)
 def load_and_clean_data() -> pl.DataFrame:
-    engine = create_engine(DB_URL)
+    engine = create_engine(DB_URL, connect_args={"sslmode": "require"})
     try:
         with engine.connect() as conn:
             df = pl.read_database("SELECT * FROM menu", connection=conn)
@@ -25,11 +44,18 @@ def load_and_clean_data() -> pl.DataFrame:
         st.error(f"Database Connection Failed: {e}")
         return pl.DataFrame()
 
+    if df.is_empty():
+        return df
+
+    # Ensure availability column exists before cleaning
+    if "availability" not in df.columns:
+        df = df.with_columns(pl.lit("yes").alias("availability"))
+
     df = df.with_columns([
         pl.col("item_name").fill_null("Unknown Item"),
         pl.col("price").cast(pl.Float64).fill_null(0.0),
         pl.col("category").fill_null("General"),
-        pl.col("availability").str.to_lowercase().fill_null("no"),
+        pl.col("availability").cast(pl.Utf8).str.to_lowercase().fill_null("no"),
         pl.col("description").fill_null("No description available.")
     ])
 
