@@ -9,30 +9,20 @@ from typing import Dict, List
 
 # ---------------- Configuration ----------------
 st.set_page_config(page_title="🍔 SnackBot Pro", page_icon="🍔", layout="wide")
-# ---------------- Configuration ----------------
-st.set_page_config(page_title="🍔 SnackBot Pro", page_icon="🍔", layout="wide")
 
-# Automatically format Supabase URL for SQLAlchemy + psycopg2
-raw_url = st.secrets["DATABASE_URL"]
-if raw_url.startswith("postgres://"):
-    raw_url = raw_url.replace("postgres://", "postgresql+psycopg2://", 1)
-elif raw_url.startswith("postgresql://"):
-    raw_url = raw_url.replace("postgresql://", "postgresql+psycopg2://", 1)
+# Look up the key name "DATABASE_URL" (DO NOT paste the postgresql:// link here)
+if "DATABASE_URL" not in st.secrets:
+    st.error("DATABASE_URL is missing in Streamlit Secrets. Add it in Manage app -> Settings -> Secrets.")
+    st.stop()
 
-# ---------------- Configuration ----------------
-st.set_page_config(page_title="🍔 SnackBot Pro", page_icon="🍔", layout="wide")
-
-# ---------------- Configuration ----------------
-st.set_page_config(page_title="🍔 SnackBot Pro", page_icon="🍔", layout="wide")
-
-# Automatically format Supabase URL for SQLAlchemy + psycopg2
-raw_url = st.secrets["postgresql://postgres.mfmzieiomviomryahbmy:Rizwan@2712006@aws-1-ap-northeast-1.pooler.supabase.com:5432/postgres"]
+raw_url = st.secrets["DATABASE_URL"].strip()
 if raw_url.startswith("postgres://"):
     raw_url = raw_url.replace("postgres://", "postgresql+psycopg2://", 1)
 elif raw_url.startswith("postgresql://"):
     raw_url = raw_url.replace("postgresql://", "postgresql+psycopg2://", 1)
 
 DB_URL = raw_url
+EMBED_MODEL = "all-MiniLM-L6-v2"
 EMBED_MODEL = "all-MiniLM-L6-v2"
 
 
