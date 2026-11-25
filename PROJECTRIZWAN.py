@@ -15,7 +15,7 @@ if "DATABASE_URL" not in st.secrets:
     st.error("DATABASE_URL is missing in Streamlit Secrets. Add it in Manage app -> Settings -> Secrets.")
     st.stop()
 
-raw_url = st.secrets["DATABASE_URL"].strip()
+raw_url = st.secrets["postgresql://postgres.mfmzieiomviomryahbmy:QOv7YeuixTG8eIlY@aws-1-ap-northeast-1.pooler.supabase.com:5432/postgres"].strip()
 if raw_url.startswith("postgres://"):
     raw_url = raw_url.replace("postgres://", "postgresql+psycopg2://", 1)
 elif raw_url.startswith("postgresql://"):
