@@ -22,8 +22,11 @@ elif raw_url.startswith("postgresql://"):
 # ---------------- Configuration ----------------
 st.set_page_config(page_title="🍔 SnackBot Pro", page_icon="🍔", layout="wide")
 
+# ---------------- Configuration ----------------
+st.set_page_config(page_title="🍔 SnackBot Pro", page_icon="🍔", layout="wide")
+
 # Automatically format Supabase URL for SQLAlchemy + psycopg2
-raw_url = st.secrets["DATABASE_URL"]
+raw_url = st.secrets["postgresql://postgres.mfmzieiomviomryahbmy:Rizwan%402712006@aws-1-ap-northeast-1.pooler.supabase.com:5432/postgres"]
 if raw_url.startswith("postgres://"):
     raw_url = raw_url.replace("postgres://", "postgresql+psycopg2://", 1)
 elif raw_url.startswith("postgresql://"):
@@ -66,7 +69,6 @@ def load_and_clean_data() -> pl.DataFrame:
 
 
 MENU_DF = load_and_clean_data()
-
 
 @st.cache_resource
 def get_search_tools(data_list: List[str]):
